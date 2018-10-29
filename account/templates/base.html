@@ -1,0 +1,59 @@
+{% load static %}
+{# Load the tag library #}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link href="{% static 'bs3/css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'bs3/css/customcss.css' %}" rel="stylesheet">
+<style>
+        p {
+            display:block;
+        }    
+    
+    </style>
+</head>
+<body>
+    <div id="header">      
+        <ul >
+            <li style="font-size:24px;text-transform: uppercase"><a style="color:darkred;font-weight:bolder">Bookmarks Inc</a>  </li>
+            {% if request.user.is_authenticated %}
+                <li {% if section == "dashboard" %}class="selected"{% endif %} >
+                <a href="{% url "dashboard" %}">My dashboard</a>
+                </li>
+                <li {% if section == "images" %}class="selected"{% endif %} >
+                <a href="#">Images</a>
+                </li>
+                <li {% if section == "people" %}class="selected"{% endif %}>
+                        <a href="{% url "user_list" %}">People</a>
+                 </li>
+                <li class="menu">  Hello {{ request.user.first_name }},
+                        <a href="{% url "logout" %}">Logout</a>
+                </li>
+            {% else %}
+                <li class="menu"> <a href="{% url "login" %}">Log-in</a></li>
+            {% endif %}    
+        </ul>
+   
+</div>
+
+{% if messages %}
+<ul class="list-group">
+    <br>
+{% for message in messages %}
+<li class="{{ message.tags }} " style="text-align:center;background-color:lightgreen;display:inline;position:relative;left:560px;padding:20px;margin-top:10px;">
+{{ message|safe }}
+<a href="#" class="close">x</a>
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+        
+<div id="content">
+{% block content %}
+{% endblock %}
+</div>
+</body>
+</html>

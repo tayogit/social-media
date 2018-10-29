@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+{% block title %}People{% endblock %}
+{% block content %}
+<h1>People</h1>
+<div id="people-list">
+    <div class="container">
+        <div class="row">
+             {% for user in users %}
+                <div class="col-md-4">
+                    
+
+                    <div class="panel panel-info">
+                         <div class="panel-heading"><a href="{{ user.get_absolute_url }}">{{ user.get_full_name }}</a></div>
+                        <div class="panel-body" style="background-color:dimgrey"><img src="{{ user.profile.photo.url }}" class=" img-responsive" width="400px"  height="200px"></div>
+                       <div class="panel-footer">{{ user.email}}</div>
+                   </div>
+                   
+                   
+                  
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}
